@@ -1,20 +1,25 @@
 package com.example.blog.mapper;
 
 import com.example.blog.pojo.FriendLink;
+import com.example.blog.pojo.Message;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
 public interface MessageMapper {
-    List<FriendLink> listFriendLike();
+    //添加一个评论
+    int saveMessage(Message message);
 
-    FriendLink getFriendLink(String blogaddress);
+    //查询父级评论
+    List<Message> findByParentIdNull(@Param("ParentId") Long ParentId);
 
-    int saveFriendLink(FriendLink friendLink);
+    //查询一级回复
+    List<Message> findByParentIdNotNull(@Param("id") Long id);
 
-    FriendLink getFriendLinkById(Long id);
+    //查询二级以及所有子集回复
+    List<Message> findByReplayId(@Param("childId") Long childId);
 
-    int updateFriendLink(FriendLink friendLink);
-
-    void deleteFriendLink(Long id);
+    //删除评论
+    void deleteMessage(Long id);
 }
