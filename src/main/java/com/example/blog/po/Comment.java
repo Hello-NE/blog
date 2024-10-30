@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @Entity
@@ -34,11 +32,13 @@ public class Comment {
 //    private List<Comment> replyComments = new ArrayList<>();
 
     @ManyToOne
+    @JsonIgnore
     private Comment parentComment;
 
     private boolean adminComment;
 
-    public Comment() {}
+    public Comment() {
+    }
 
 //    @JsonIgnore
 //    public List<Comment> getReplyComments() {
@@ -65,7 +65,7 @@ public class Comment {
         this.parentComment = parentComment;
     }
 
-    @JsonIgnoreProperties({ "comments"})
+    @JsonIgnoreProperties({"comments"})
     public Blog getBlog() {
         return blog;
     }
@@ -114,12 +114,12 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public void setAdminComment(boolean b) {
-        this.adminComment = b;
+    public boolean isAdminComment() {
+        return adminComment;
     }
 
-    public boolean isAdminComment(){
-        return adminComment;
+    public void setAdminComment(boolean b) {
+        this.adminComment = b;
     }
 
     public String getContent() {
