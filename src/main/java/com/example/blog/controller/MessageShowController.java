@@ -28,8 +28,10 @@ public class MessageShowController {
         System.out.println(message);
         Message m;
         if (message.getId() == null) {
+
             m = messageService.saveMessage(message);
         } else {
+            
             m = messageService.updateMessage(message.getId(), message);
         }
         if (m == null) {

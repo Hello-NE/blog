@@ -34,9 +34,9 @@ public class IndexController {
     private TagService tagService;
 
     @GetMapping("/blogs")
-    public Result getBlogList(@RequestHeader Map<String, Object> para, @RequestParam String query, @RequestParam String pagenum, @RequestParam String pagesize) {
+    public Result getBlogList(@RequestHeader Map<String, Object> para, @RequestParam String query, @RequestParam String pageNum, @RequestParam String pagesize) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
-        Pageable pageable = PageRequest.of(Integer.parseInt(pagenum) - 1, Integer.parseInt(pagesize), sort);
+        Pageable pageable = PageRequest.of(Integer.parseInt(pageNum) - 1, Integer.parseInt(pagesize), sort);
         return new Result(true, StatusCode.OK, "获取博客列表成功", blogService.listBlog(pageable));
     }
 

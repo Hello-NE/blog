@@ -16,6 +16,7 @@ import java.util.Map;
 @CrossOrigin
 public class CommentController {
     private final String avatar = "/images/avatar.png";
+
     @Autowired
     private CommentService commentService;
     @Autowired
