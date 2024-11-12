@@ -10,6 +10,7 @@ import com.example.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -34,11 +35,13 @@ public class CommentController {
     public Result post(@RequestBody Map<String, Object> para) {
         System.out.println(para);
         String content = (String) para.get("content");
+        System.out.println(content);
         Long blogId = Long.parseLong(para.get("blogId").toString());
         Long userId = Long.parseLong(para.get("userId").toString());
         long parentId = Long.parseLong(para.get("parentId").toString());
         User user = userService.findUserById(userId);
         Comment comment = new Comment();
+        comment.setCreateTime(new Date());
         comment.setContent(content);
         comment.setBlog(blogService.getBlog(blogId));
         comment.setUserId(userId);

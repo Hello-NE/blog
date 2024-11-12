@@ -64,7 +64,7 @@ public class BlogServiceImpl implements BlogService {
     public Page<Blog> listBlog(Long tagId, Pageable pageable) {
         Page<Blog> blogs = blogRepository.findAll((Specification<Blog>) (root, cq, cb) -> cb.equal(root.join("tags").get("id"), tagId), pageable);
         blogs.stream().forEach(blog -> {
-            blog.setContent("");
+            blog.setContent("");//不用知道文章的具体内容，只返回文章的基本信息就可以了
             blog.setComments(null);
         });
         return blogs;
@@ -74,7 +74,7 @@ public class BlogServiceImpl implements BlogService {
     public Page<Blog> listBlog(String query, Pageable pageable) {
         Page<Blog> blogs = blogRepository.findByQuery(query, pageable);
         blogs.stream().forEach(blog -> {
-            blog.setContent("");
+            blog.setContent("");//不用知道文章的具体内容，只返回文章的基本信息就可以了
             blog.setComments(null);
         });
         return blogs;
@@ -86,7 +86,7 @@ public class BlogServiceImpl implements BlogService {
         Pageable pageable = PageRequest.of(0, size, sort);
         List<Blog> blogs = blogRepository.findTop(pageable);
         blogs.stream().forEach(blog -> {
-            blog.setContent("");
+            blog.setContent("");//不用知道文章的具体内容，只返回文章的基本信息就可以了
             blog.setComments(null);
         });
         return blogs;

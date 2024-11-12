@@ -25,6 +25,7 @@ public class ArchiveShowController {
     }
 
     @GetMapping("/countBlog")
+    @ResponseBody  // 添加这个注解以返回JSON
     public Result count() {
         return new Result(true, StatusCode.OK, "查询博客列表成功", blogService.countBlog());
     }

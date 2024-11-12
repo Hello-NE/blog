@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
-        if (user.getAvatar() == null || "".equals(user.getAvatar())){
-            user.setAvatar("http://hikari.top/images/d5026d40-d68e-4e0d-a0b9-37cd58e3ff35.png");
+        if (user.getAvatar() == null || "".equals(user.getAvatar())) {
+            user.setAvatar("http://test.png");
         }
         return userRepository.save(user);
     }

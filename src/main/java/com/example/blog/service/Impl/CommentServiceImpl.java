@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> listCommentByBlogId(Long blogId) {
         Sort sort = Sort.by("createTime");
-        List<Comment> comments = commentRepository.findByBlogIdAndParentCommentNull(blogId,sort);
+        List<Comment> comments = commentRepository.findByBlogIdAndParentCommentNull(blogId, sort);
         comments.forEach(comment -> {
             Blog blog = comment.getBlog();
             blog.setContent("");
