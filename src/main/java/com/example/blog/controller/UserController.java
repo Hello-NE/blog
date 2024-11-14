@@ -7,10 +7,7 @@ import com.example.blog.po.User;
 import com.example.blog.service.UserService;
 import com.example.blog.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -45,5 +42,28 @@ public class UserController {
             return new Result(true, StatusCode.ERROR, "admin login failed", null);
         }
     }
+
+    @PostMapping(value = "/registor")
+    public Result post(@RequestBody Map<String, User> para) {
+        User u = para.get("user");
+        if (u != null) {
+            User user = userService.save(u);
+            System.out.println(user);
+            String token = TokenUtils.sign(user);
+            Map<String, Object> info = new HashMap<>();
+            info.put("user", user);
+            info.put("token", token);
+            return new Result(true, StatusCode.OK, "管理员登录成功", info);
+        } else {
+            return new Result(true, StatusCode.LOGINERROR, "管理员登录失败", null);
+        }
+    }
+
+    @GetMapping(value = "/users")
+    public Result get() {
+        System.out.println(userService.listUser());
+        return new Result(true, StatusCode.OK, "获取用户列表成功", userService.listUser());
+    }
+
 
 }

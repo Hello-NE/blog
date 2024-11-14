@@ -16,22 +16,22 @@ public class WebConfiguration implements WebMvcConfigurer {
     private TokenInterceptor tokenInterceptor;
 
     //构造方法
-    public WebConfiguration(TokenInterceptor tokenInterceptor){
+    public WebConfiguration(TokenInterceptor tokenInterceptor) {
         this.tokenInterceptor = tokenInterceptor;
     }
 
     @Override
-    public void configureAsyncSupport(AsyncSupportConfigurer configurer){
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
         configurer.setTaskExecutor(new ConcurrentTaskExecutor(Executors.newFixedThreadPool(3)));
         configurer.setDefaultTimeout(30000);
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry){
+    public void addInterceptors(InterceptorRegistry registry) {
         List<String> excludePath = new ArrayList<>();
         //排除拦截，除了注册登录(此时还没token)，其他都拦截
-        excludePath.add("/register");  //登录
         excludePath.add("/login");     //注册
+        excludePath.add("/register");  //登录
         excludePath.add("/static/**");  //静态资源
         excludePath.add("/assets/**");  //静态资源
 

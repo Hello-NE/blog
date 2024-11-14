@@ -2,10 +2,14 @@ package com.example.blog.po;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "t_essay")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
@@ -19,56 +23,8 @@ public class Essay {
     private String content;
     private String color;
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Long getPraise() {
-        return praise;
-    }
-
-    public void setPraise(Long praise) {
-        this.praise = praise;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 
     @Override
     public String toString() {

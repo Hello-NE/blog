@@ -2,6 +2,7 @@ package com.example.blog.po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_user")
-@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
+@Data
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class User {
     @Id
     @GeneratedValue
@@ -40,16 +42,16 @@ public class User {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public List<Blog> getBlogs() {
         return blogs;
     }
 
     public void setBlogs(List<Blog> blogs) {
         this.blogs = blogs;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNickname() {
@@ -99,6 +101,7 @@ public class User {
     public void setType(String type) {
         this.type = type;
     }
+
     public Date getCreateTime() {
         return createTime;
     }

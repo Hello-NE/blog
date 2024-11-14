@@ -1,14 +1,10 @@
 package com.example.blog.po;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
-
-@Data
 @Entity
 @Table(name = "t_comment")
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
@@ -34,7 +30,6 @@ public class Comment {
 //    private List<Comment> replyComments = new ArrayList<>();
 
     @ManyToOne
-    @JsonIgnore
     private Comment parentComment;
 
     private boolean adminComment;

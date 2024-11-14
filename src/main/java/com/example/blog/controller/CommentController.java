@@ -50,11 +50,20 @@ public class CommentController {
         comment.setAvatar(user.getAvatar());
         comment.setAdminComment(user.getType().equals("1"));
         if (parentId != -1) {
+
             comment.setParentComment(commentService.getCommentById(parentId));
+
+
         }
         System.out.println(comment);
-        Comment newComment = commentService.saveComment(comment);
-        return new Result(true, StatusCode.OK, "评论发表成功！", newComment);
+        Comment tmp = null;
+        try {
+            Comment newComment = commentService.saveComment(comment);
+            tmp = newComment;
+        } catch (Exception e) {
+            return new Result(false, StatusCode.ERROR, "？你发哪里去了", null);
+        }
+        return new Result(true, StatusCode.OK, "评论发表成功！", tmp);
     }
 
     //删除评论

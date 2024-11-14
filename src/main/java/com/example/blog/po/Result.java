@@ -1,5 +1,10 @@
 package com.example.blog.po;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Result<T> {
 
     private boolean flag;//是否成功
@@ -12,7 +17,7 @@ public class Result<T> {
         this.flag = flag;
         this.code = code;
         this.message = message;
-        this.data = (T)data;
+        this.data = (T) data;
     }
 
     public Result(boolean flag, Integer code, String message) {
@@ -27,35 +32,4 @@ public class Result<T> {
         this.message = "执行成功";
     }
 
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }

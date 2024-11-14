@@ -1,8 +1,6 @@
 package com.example.blog.po;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class Tag {
     public Tag() {
     }
 
-    @JsonIgnoreProperties({ "tags"})
+    @JsonIgnoreProperties({"tags"})
     public List<Blog> getBlogs() {
         return blogs;
     }
