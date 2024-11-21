@@ -55,19 +55,34 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTagTop(Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
-        Pageable pageable = PageRequest.of(0,size,sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+        Pageable pageable = PageRequest.of(0, size, sort);
         List<Tag> tags = tagRepository.findTop(pageable);
         return reduceTagsAttributes(tags);
     }
 
     @Override
     public List<Tag> listTag(String ids) {
+        System.out.println(ids);
         List<Tag> tags = tagRepository.findAllById(convertToList(ids));
         return reduceTagsAttributes(tags);
     }
 
+
+    private List<Long> convertToList(String ids) {
+        System.out.println(ids);
+        List<Long> list = new ArrayList<>();
+        if (!"".equals(ids) && ids != null) {
+            String[] idarray = ids.split(",");
+            for (int i = 0; i < idarray.length; i++) {
+                list.add(new Long(idarray[i]));
+            }
+        }
+        return list;
+    }
+
     private List<Tag> reduceTagsAttributes(List<Tag> tags) {
+        System.out.println(tags);
         tags.forEach(tag -> {
             List<Blog> blogs = tag.getBlogs();
             blogs.forEach(blog -> {
@@ -79,22 +94,12 @@ public class TagServiceImpl implements TagService {
         return tags;
     }
 
-    private List<Long> convertToList(String ids) {
-        List<Long> list = new ArrayList<>();
-        if (!"".equals(ids)&&ids != null){
-            String[] idarray = ids.split(",");
-            for (int i=0;i<idarray.length;i++){
-                list.add(new Long(idarray[i]));
-            }
-        }
-        return list;
-    }
 
     @Transactional
     @Override
     public Tag updateTag(Long id, Tag tag) {
-        Tag t=tagRepository.getOne(id);
-        BeanUtils.copyProperties(tag,t);
+        Tag t = tagRepository.getOne(id);
+        BeanUtils.copyProperties(tag, t);
         return tagRepository.save(t);
     }
 
@@ -106,7 +111,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listByNameExceptSelf(Long id, String name) {
-        return tagRepository.findByNameExceptSelf(id,name);
+        return tagRepository.findByNameExceptSelf(id, name);
     }
 
 }

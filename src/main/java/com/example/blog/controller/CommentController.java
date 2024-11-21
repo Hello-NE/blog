@@ -50,10 +50,7 @@ public class CommentController {
         comment.setAvatar(user.getAvatar());
         comment.setAdminComment(user.getType().equals("1"));
         if (parentId != -1) {
-
             comment.setParentComment(commentService.getCommentById(parentId));
-
-
         }
         System.out.println(comment);
         Comment tmp = null;

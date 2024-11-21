@@ -1,9 +1,13 @@
 package com.example.blog.service.Impl;
 
 import com.example.blog.dao.BlogRepository;
+import com.example.blog.dao.CommentRepository;
 import com.example.blog.po.Blog;
+import com.example.blog.po.Comment;
 import com.example.blog.po.Type;
 import com.example.blog.service.BlogService;
+import com.example.blog.service.CommentService;
+import com.example.blog.service.UserService;
 import com.example.blog.util.MarkdownUtils;
 import com.example.blog.util.MyBeanUtils;
 import com.example.blog.vo.BlogQuery;
@@ -25,7 +29,16 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public Blog getBlog(Long id) {
@@ -111,7 +124,21 @@ public class BlogServiceImpl implements BlogService {
         } else {
             blog.setUpdateTime(new Date());
         }
-        return blogRepository.save(blog);
+        blog = blogRepository.save(blog);
+        if (blog.getComments() != null) {
+            for (Comment comment : blog.getComments()) {
+                comment.setCreateTime(new Date());
+                comment.setBlog(blog);
+                comment.setAvatar(userService.findUserById(comment.getUserId())
+                        .getAvatar());
+                comment.setNickname(userService.findUserById(comment.getUserId())
+                        .getNickname());
+                comment.setEmail(userService.findUserById(comment.getUserId())
+                        .getEmail());
+                commentRepository.save(comment);
+            }
+        }
+        return blog;
     }
 
     @Transactional
@@ -129,7 +156,10 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     @Override
     public void deleteBlog(Long id) {
+        //blog_id
+
         blogRepository.deleteById(id);
+
     }
 
     @Override

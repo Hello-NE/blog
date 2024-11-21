@@ -23,7 +23,8 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
-    @ManyToOne
+    //    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)  // 使用级联操作
     private Blog blog = new Blog();
 
 //    @OneToMany(mappedBy = "parentComment")

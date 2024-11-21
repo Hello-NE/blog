@@ -30,17 +30,20 @@ public class TypeController {
             if (type1 != null) {
                 return new Result(false, StatusCode.ERROR, "不能添加重复的分类", null);
             }
+            typeService.saveType(type);
         } else {
             System.out.println("修改");
+            Type t = typeService.updateType(type.getId(), type);
+            if (t == null) {
+                return new Result(false, StatusCode.ERROR, "修改失败", null);
+            }
             List<Type> typeList = typeService.listByNameExceptSelf(type.getId(), type.getName());
             if (typeList.size() > 0) {
                 return new Result(false, StatusCode.ERROR, "分类名称已存在", null);
             }
         }
-        Type t = typeService.updateType(type.getId(), type);
-        if (t == null) {
-            return new Result(false, StatusCode.ERROR, "修改失败", null);
-        }
+
+
         return new Result(true, StatusCode.OK, "修改成功", null);
     }
 

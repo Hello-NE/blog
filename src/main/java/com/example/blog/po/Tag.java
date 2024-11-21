@@ -1,13 +1,16 @@
 package com.example.blog.po;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 @Entity
 @Table(name = "t_tag")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class Tag {
 
     @Id
@@ -15,7 +18,7 @@ public class Tag {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", cascade = {CascadeType.PERSIST})
     private List<Blog> blogs = new ArrayList<>();
 
     public Tag() {
@@ -26,24 +29,12 @@ public class Tag {
         return blogs;
     }
 
-    public void setBlogs(List<Blog> blogs) {
-        this.blogs = blogs;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

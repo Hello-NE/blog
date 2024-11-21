@@ -21,6 +21,7 @@ public class Essay {
     private Long praise;
     private String title;
     private String content;
+    private String image;
     private String color;
 
     @Temporal(TemporalType.TIMESTAMP)

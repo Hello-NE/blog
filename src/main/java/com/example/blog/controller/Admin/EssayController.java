@@ -38,7 +38,7 @@ public class EssayController {
             return new Result(false, StatusCode.ERROR, "操作失败", null);
 
         }
-        return new Result(true, StatusCode.OK, "操作成功", null);
+        return new Result(true, StatusCode.OK, "操作成功", e);
 
     }
 
