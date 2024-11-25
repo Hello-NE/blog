@@ -5,6 +5,7 @@ import com.example.blog.po.Result;
 import com.example.blog.po.StatusCode;
 import com.example.blog.po.User;
 import com.example.blog.service.UserService;
+import com.example.blog.util.MD5Utils;
 import com.example.blog.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public Result login(@RequestBody Map<String, User> para) {
         User u = para.get("user");
-        User user = userService.checkUser(u.getUsername(), u.getPassword());
-
+        User user = userService.checkUser(u.getUsername(), MD5Utils.code(u.getPassword()));
         if (user != null) {
             String token = TokenUtils.sign(user);
             Map<String, Object> info = new HashMap<>();
@@ -47,9 +47,11 @@ public class UserController {
     public Result post(@RequestBody Map<String, User> para) {
         User u = para.get("user");
         if (u != null) {
+            u.setPassword(MD5Utils.code(u.getPassword()));
             User user = userService.save(u);
             System.out.println(user);
             String token = TokenUtils.sign(user);
+
             Map<String, Object> info = new HashMap<>();
             info.put("user", user);
             info.put("token", token);

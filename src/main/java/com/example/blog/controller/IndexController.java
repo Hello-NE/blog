@@ -48,7 +48,7 @@ public class IndexController {
     @GetMapping("/search")
     public Result search(@PageableDefault(size = 8, sort = {"createTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          @RequestParam String query) {
-        System.out.println(query);
+
         return new Result(true, StatusCode.OK, "获取搜索博客成功", blogService.listBlog("%" + query + "%", pageable));
     }
 
